@@ -10,10 +10,11 @@ import requests
 from io import BytesIO
 import numpy as np
 import math
+import os
 
 # Page configuration
 st.set_page_config(
-    page_title="✨ Waris's Special Day ✨",
+    page_title="✨ Saleha's Special Day ✨",
     page_icon="🎂",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -30,11 +31,11 @@ def local_css():
     }
     
     .main {
-        background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        background: linear-gradient(135deg, #f0f8f0 0%, #d4e6d4 100%);
     }
 
     .stApp {
-        background: radial-gradient(ellipse at center, #fdfcfb 0%, #e2d1c3 100%);
+        background: radial-gradient(ellipse at center, #f0f8f0 0%, #d4e6d4 100%);
     }
     
     .floating-element {
@@ -51,7 +52,7 @@ def local_css():
     }
     
     .premium-container {
-        border: 1px solid rgba(255, 215, 0, 0.3);
+        border: 1px solid rgba(152, 251, 152, 0.3);
         background-color: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(10px);
         box-shadow: 0 10px 30px rgba(0,0,0,0.05), 0 1px 8px rgba(0,0,0,0.05), 0 0 1px rgba(0,0,0,0.05);
@@ -109,7 +110,7 @@ def local_css():
     .elegant-wish {
         font-family: 'Dancing Script', cursive;
         font-size: 2.5rem;
-        color: #d4af37;
+        color: #98fb98;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         margin: 30px 0;
     }
@@ -143,7 +144,7 @@ def local_css():
         font-size: 3rem;
         font-weight: 700;
         margin-bottom: 5px;
-        background: linear-gradient(to right, #d4af37, #f9f295);
+        background: linear-gradient(to right, #98fb98, #90ee90);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -156,7 +157,7 @@ def local_css():
     }
     
     .premium-button {
-        background: linear-gradient(to right, #d4af37, #f9f295);
+        background: linear-gradient(to right, #98fb98, #90ee90);
         color: #fff;
         font-family: 'Montserrat', sans-serif;
         font-weight: 600;
@@ -165,17 +166,17 @@ def local_css():
         border: none;
         border-radius: 50px;
         padding: 12px 30px;
-        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        box-shadow: 0 10px 20px rgba(152, 251, 152, 0.3);
         transition: all 0.3s ease;
     }
     
     .premium-button:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+        box-shadow: 0 15px 30px rgba(152, 251, 152, 0.4);
     }
     
     .gold-border {
-        border: 2px solid #d4af37;
+        border: 2px solid #98fb98;
         border-radius: 20px;
         padding: 30px;
         position: relative;
@@ -189,7 +190,7 @@ def local_css():
         right: -2px;
         bottom: -2px;
         border-radius: 20px;
-        background: linear-gradient(45deg, #d4af37, #f9f295, #d4af37, #f9f295);
+        background: linear-gradient(45deg, #98fb98, #90ee90, #98fb98, #90ee90);
         background-size: 400% 400%;
         z-index: -1;
         animation: border-shift 5s linear infinite;
@@ -216,7 +217,7 @@ def local_css():
         position: absolute;
         width: 200px;
         height: 200px;
-        background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+        background: radial-gradient(circle, rgba(152, 251, 152, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
         top: -100px;
         left: -100px;
     }
@@ -226,13 +227,13 @@ def local_css():
         position: absolute;
         width: 200px;
         height: 200px;
-        background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+        background: radial-gradient(circle, rgba(152, 251, 152, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
         bottom: -100px;
         right: -100px;
     }
     
     .rose-gold-text {
-        background: linear-gradient(to right, #ec6f66, #f3a183);
+        background: linear-gradient(to right, #98fb98, #90ee90);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-family: 'Montserrat', sans-serif;
@@ -250,6 +251,28 @@ def local_css():
         transform: rotate(0deg) scale(1.05);
     }
     
+    .photo-placeholder {
+        width: 560px;
+        height: 560px;
+        background: linear-gradient(145deg, #f0f8f0, #d4e6d4);
+        border: 2px solid #98fb98;
+        border-radius: 16px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px auto;
+        position: relative;
+    }
+
+    .photo-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
     .shake-animation {
         animation: shake 5s ease-in-out infinite;
         transform-origin: center;
@@ -315,8 +338,8 @@ def local_css():
     }
     
     @keyframes cake-glow {
-        0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); }
-        50% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1)); }
+        0%, 100% { filter: drop-shadow(0 0 8px rgba(152, 251, 152, 0.7)); }
+        50% { filter: drop-shadow(0 0 15px rgba(152, 251, 152, 1)); }
     }
     
     </style>
@@ -340,7 +363,7 @@ def autoplay_audio_url(url):
 # Function to generate premium confetti
 def generate_confetti():
     confetti_html = ""
-    colors = ["#FFD700", "#d4af37", "#FFC0CB", "#FF69B4", "#C9A9A6"]
+    colors = ["#98fb98", "#90ee90", "#98fb98", "#90ee90", "#C9A9A6"]
     
     for i in range(50):
         size = random.randint(5, 15)
@@ -397,14 +420,14 @@ def generate_sparkles():
 # Premium birthday wish templates
 def get_premium_birthday_wishes():
     return [
-        "Happy Birthday, Brother! May this year bring you all the success, joy, and adventure you deserve.",
-        "To my amazing brother Waris - may your birthday be filled with laughter, love, and everything that makes you smile.",
-        "Another year older, another year wiser! Happy Birthday to the best brother anyone could ask for.",
-        "On your special day, I want you to know how much you mean to me. Happy Birthday, Waris!",
-        "May your birthday be as awesome as you are, brother! Here's to another year of amazing memories together.",
-        "Happy Birthday to my partner in crime, my best friend, my brother - Waris!",
-        "Today we celebrate you, brother! May your birthday bring you all the happiness and success you deserve.",
-        "Another year of being the incredible person you are. Happy Birthday, Waris!"
+        "Happy Birthday, Saleha! May this year bring you all the success, joy, and adventure you deserve.",
+        "To my amazing friend Saleha - may your birthday be filled with laughter, love, and everything that makes you smile.",
+        "Another year older, another year wiser! Happy Birthday to the best friend anyone could ask for.",
+        "On your special day, I want you to know how much you mean to me. Happy Birthday, Saleha!",
+        "May your birthday be as awesome as you are, friend! Here's to another year of amazing memories together.",
+        "Happy Birthday to my partner in crime, my best friend - Saleha!",
+        "Today we celebrate you, friend! May your birthday bring you all the happiness and success you deserve.",
+        "Another year of being the incredible person you are. Happy Birthday, Saleha!"
     ]
 
 # Function to create fancy text with sparkle animation
@@ -414,37 +437,37 @@ def fancy_header(text, element_class="shimmer-text", tag="h1"):
 # Personal memories and quotes for Waris
 def get_personal_memories():
     return [
-        "Remember when we used to play together as kids? Those were the best times!",
-        "Your determination and hard work always inspire me, brother.",
+        "Remember when we used to hang out together? Those were the best times!",
+        "Your determination and hard work always inspire me, Saleha.",
         "Thanks for always being there when I needed you most.",
-        "Your sense of humor can brighten up any room, Waris.",
-        "You're not just my brother, you're my best friend.",
+        "Your sense of humor can brighten up any room, Saleha.",
+        "You're not just my friend, you're my best friend.",
         "Watching you grow into the amazing person you are has been a privilege.",
         "Your kindness and generosity towards everyone around you is truly admirable.",
         "That time we stayed up all night talking about our dreams and future plans."
     ]
 
-# Check if today is Waris's birthday (you can modify the date as needed)
+# Check if today is Saleha's birthday (you can modify the date as needed)
 def is_birthday():
-    # Use Birmingham UK timezone
-    timezone = pytz.timezone('Europe/London')
+    # Use Pakistan timezone
+    timezone = pytz.timezone('Asia/Karachi')
     today = datetime.now(timezone).date()
     # You can change this to Waris's actual birthday date
     # For example, if Waris's birthday is August 10th, change it to: return today.month == 8 and today.day == 10
-    return today.month == 8 and today.day == 10  # Change this to Waris's actual birthday
+    return today.month == 9 and today.day == 18  # Saleha's birthday is December 27th
 
-# Calculate time until Waris's birthday
+# Calculate time until Saleha's birthday
 def time_until_birthday():
-    timezone = pytz.timezone('Europe/London')
+    timezone = pytz.timezone('Asia/Karachi')
     now = datetime.now(timezone)
     current_year = now.year
     
     # Create birthday datetime object for this year (change the date to Waris's actual birthday)
-    birthday = timezone.localize(datetime(current_year, 8, 10, 0, 0, 0))  # Change this to Waris's actual birthday
+    birthday = timezone.localize(datetime(current_year, 12, 27, 0, 0, 0))  # Saleha's birthday is December 27th
     
     # If birthday has already passed this year, look for next year
     if now > birthday:
-        birthday = timezone.localize(datetime(current_year + 1, 8, 10, 0, 0, 0))  # Change this to Waris's actual birthday
+        birthday = timezone.localize(datetime(current_year + 1, 12, 27, 0, 0, 0))  # Saleha's birthday is December 27th
     
     # Calculate time remaining
     delta = birthday - now
@@ -464,7 +487,7 @@ def show_premium_countdown():
         st.markdown("""
         <div class="premium-container reflection">
             <h2 style="text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 30px; color: black;">
-                Waris's Birthday Celebration
+                Saleha's Birthday Celebration
             </h2>
         """, unsafe_allow_html=True)
         
@@ -500,7 +523,7 @@ def show_premium_countdown():
             <img src="https://media.giphy.com/media/l0MYyDa8S9ghzNebm/giphy.gif" width="300" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
         </div>
         
-        <p style="text-align: center; font-family: 'Dancing Script', cursive; font-size: 2rem; color: #d4af37; margin-top: 20px;">
+        <p style="text-align: center; font-family: 'Dancing Script', cursive; font-size: 2rem; color: #98fb98; margin-top: 20px;">
             Coming Soon...
         </p>
         </div>
@@ -525,9 +548,9 @@ def create_floating_image(image_url, size=200, rotation=5, delay=0):
 def main():
     # Add timezone information to the app
     st.sidebar.markdown("### Celebration Details")
-    st.sidebar.markdown("**Timezone:** Europe/London (Birmingham UK Time)")
+    st.sidebar.markdown("**Timezone:** Asia/Karachi (Pakistan Time)")
     st.sidebar.markdown("**Current Date in Selected Timezone:**")
-    timezone = pytz.timezone('Europe/London')
+    timezone = pytz.timezone('Asia/Karachi')
     current_time = datetime.now(timezone)
     st.sidebar.markdown(f"{current_time.strftime('%Y-%m-%d %H:%M:%S')}")
     
@@ -560,14 +583,14 @@ def main():
             st.markdown("""
             <div style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
                 <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #666;">
-                    Crafted with ❤️ for Waris's Special Day | 2025
+                    Crafted with ❤️ for Saleha's Special Day | 2025
                 </p>
             </div>
             """, unsafe_allow_html=True)
             return
     
     # Fixed recipient information
-    recipient_name = "Waris"
+    recipient_name = "Saleha"
     
     # Full birthday content
     col1, col2, col3 = st.columns([1, 3, 1])
@@ -596,13 +619,13 @@ def main():
     st.markdown(f"""
         <div class="message-card">
             <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 20px; color: #333;">
-                Dearest Waris,
+                Dearest Saleha,
             </h2>
             <p style="font-family: 'Playfair Display', serif; font-size: 1.3rem; line-height: 1.8; color: #444; margin-bottom: 20px;">
                 {birthday_message}
             </p>
             <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #666; margin-top: 30px;">
-                On this remarkable day, I wanted to create something special to celebrate your birthday, brother. Your kindness, strength, and wonderful spirit deserve nothing but the best celebration. You're not just my brother, you're my best friend and I'm so grateful to have you in my life.
+                On this remarkable day, I wanted to create something special to celebrate your birthday, friend. Your kindness, strength, and wonderful spirit deserve nothing but the best celebration. You're not just my friend, you're my best friend and I'm so grateful to have you in my life.
             </p>
             <p class="rose-gold-text" style="text-align: right; font-size: 1.5rem; margin-top: 30px;">
                 With love and appreciation,
@@ -651,6 +674,42 @@ def main():
         </div>
     """, unsafe_allow_html=True)
     
+    # Local default images (from same folder)
+    st.markdown("""
+        <h3 style=\"font-family: 'Playfair Display', serif; text-align: center; margin: 20px 0; color: #333;\">
+            Featured Photos
+        </h3>
+    """, unsafe_allow_html=True)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    default_image_names = ["sari.jpg", "n_img.jpg", "red.jpg"]
+    default_image_paths = []
+    for image_name in default_image_names:
+        image_path = os.path.join(script_dir, image_name)
+        if os.path.exists(image_path):
+            default_image_paths.append(image_path)
+
+    if default_image_paths:
+        cols = st.columns(3)
+        for idx, path in enumerate(default_image_paths):
+            with cols[idx % 3]:
+                try:
+                    # Read and embed image as base64 to ensure fixed-size placeholder rendering
+                    with open(path, "rb") as f:
+                        img_bytes = f.read()
+                    ext = os.path.splitext(path)[1].lower()
+                    mime = "image/jpeg" if ext in [".jpg", ".jpeg"] else "image/png"
+                    b64 = base64.b64encode(img_bytes).decode()
+                    st.markdown(f"""
+                        <div class=\"photo-placeholder\">
+                            <img class=\"photo-img\" src=\"data:{mime};base64,{b64}\" />
+                        </div>
+                    """, unsafe_allow_html=True)
+                except Exception:
+                    pass
+
+    # (Image uploader removed by request)
+
     # Interactive "gift" - digital birthday cake
     st.markdown("""
         <h3 style="font-family: 'Playfair Display', serif; text-align: center; margin: 40px 0 20px; color: #333;">
@@ -667,7 +726,7 @@ def main():
     # Make a wish section
     st.markdown("""
         <div class="premium-container" style="text-align: center; max-width: 600px; margin: 30px auto;">
-            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #d4af37; margin-bottom: 20px;">
+            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #98fb98; margin-bottom: 20px;">
                 Make a Wish
             </h3>
             <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #666; margin-bottom: 30px;">
@@ -682,7 +741,7 @@ def main():
             st.balloons()
             st.markdown("""
             <div style="text-align: center; margin: 30px 0;">
-                <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: #d4af37;">
+                <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: #98fb98;">
                     Your wish has been sent to the universe!
                 </h3>
                 <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #666;">
@@ -704,7 +763,7 @@ def main():
             <h3 style="font-family: 'Playfair Display', serif; color: #333; margin-bottom: 20px;">
                 Birthday Blessings
             </h3>
-            <div class="premium-container" style="background: linear-gradient(to right, rgba(212, 175, 55, 0.1), rgba(249, 242, 149, 0.1)); text-align: center; padding: 30px;">
+            <div class="premium-container" style="background: linear-gradient(to right, rgba(152, 251, 152, 0.1), rgba(144, 238, 144, 0.1)); text-align: center; padding: 30px;">
                 <p style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #333;">
                     "May your birthday be the start of a year filled with good luck, good health, and much happiness."
                 </p>
@@ -719,12 +778,12 @@ def main():
         <img src="https://media.giphy.com/media/KdC9XVrVYOVu5sKhI9/giphy.gif" width="300" 
              style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;">
         
-        <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #d4af37; margin: 20px 0;">
-            Happy Birthday Waris!
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #98fb98; margin: 20px 0;">
+            Happy Birthday Saleha!
         </h2>
         
         <p style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
-            May your special day bring you all that your heart desires, brother!
+            May your special day bring you all that your heart desires, friend!
         </p>
     </div>
                 </style>
@@ -741,7 +800,7 @@ def main():
     st.markdown("""
     <div style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
         <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #666;">
-            Crafted with ❤️ especially for Waris | 2025
+            Crafted with ❤️ especially for Saleha | 2025
         </p>
     </div>
     """, unsafe_allow_html=True)
