@@ -465,7 +465,7 @@ def is_birthday():
     today = datetime.now(timezone).date()
     # You can change this to Waris's actual birthday date
     # For example, if Waris's birthday is August 10th, change it to: return today.month == 8 and today.day == 10
-    return today.month == 9 and today.day == 19  # Saleha's birthday is December 27th
+    return today.month == 9 and today.day == 20  # Saleha's birthday is December 27th
 
 # Calculate time until Saleha's birthday
 def time_until_birthday():
@@ -474,11 +474,11 @@ def time_until_birthday():
     current_year = now.year
     
     # Create birthday datetime object for this year (change the date to Waris's actual birthday)
-    birthday = timezone.localize(datetime(current_year, 12, 27, 0, 0, 0))  # Saleha's birthday is December 27th
+    birthday = timezone.localize(datetime(current_year, 9, 20, 0, 0, 0))  # Saleha's birthday is December 27th
     
     # If birthday has already passed this year, look for next year
     if now > birthday:
-        birthday = timezone.localize(datetime(current_year + 1, 12, 27, 0, 0, 0))  # Saleha's birthday is December 27th
+        birthday = timezone.localize(datetime(current_year + 1, 9, 20, 0, 0, 0))  # Saleha's birthday is December 27th
     
     # Calculate time remaining
     delta = birthday - now
