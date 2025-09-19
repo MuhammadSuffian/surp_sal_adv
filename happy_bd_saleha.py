@@ -15,7 +15,7 @@ import hashlib
 
 # Page configuration
 st.set_page_config(
-    page_title="✨ Saleha's Special Day ✨",
+    page_title="✨ Saliha's Special Day ✨",
     page_icon="🎂",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -431,14 +431,14 @@ def generate_sparkles():
 # Premium birthday wish templates
 def get_premium_birthday_wishes():
     return [
-        "Happy Birthday, Saleha! May this year bring you all the success, joy, and adventure you deserve.",
-        "To my amazing friend Saleha - may your birthday be filled with laughter, love, and everything that makes you smile.",
+        "Happy Birthday, Saliha! May this year bring you all the success, joy, and adventure you deserve.",
+        "To my amazing friend Saliha - may your birthday be filled with laughter, love, and everything that makes you smile.",
         "Another year older, another year wiser! Happy Birthday to the best friend anyone could ask for.",
-        "On your special day, I want you to know how much you mean to me. Happy Birthday, Saleha!",
+        "On your special day, I want you to know how much you mean to me. Happy Birthday, Saliha!",
         "May your birthday be as awesome as you are, friend! Here's to another year of amazing memories together.",
-        "Happy Birthday to my partner in crime, my best friend - Saleha!",
+        "Happy Birthday to my partner in crime, my best friend - Saliha!",
         "Today we celebrate you, friend! May your birthday bring you all the happiness and success you deserve.",
-        "Another year of being the incredible person you are. Happy Birthday, Saleha!"
+        "Another year of being the incredible person you are. Happy Birthday, Saliha!"
     ]
 
 # Function to create fancy text with sparkle animation
@@ -449,36 +449,36 @@ def fancy_header(text, element_class="shimmer-text", tag="h1"):
 def get_personal_memories():
     return [
         "Remember when we used to hang out together? Those were the best times!",
-        "Your determination and hard work always inspire me, Saleha.",
+        "Your determination and hard work always inspire me, Saliha.",
         "Thanks for always being there when I needed you most.",
-        "Your sense of humor can brighten up any room, Saleha.",
+        "Your sense of humor can brighten up any room, Saliha.",
         "You're not just my friend, you're my best friend.",
         "Watching you grow into the amazing person you are has been a privilege.",
         "Your kindness and generosity towards everyone around you is truly admirable.",
         "That time we stayed up all night talking about our dreams and future plans."
     ]
 
-# Check if today is Saleha's birthday (you can modify the date as needed)
+# Check if today is Saliha's birthday (you can modify the date as needed)
 def is_birthday():
     # Use Pakistan timezone
     timezone = pytz.timezone('Asia/Karachi')
     today = datetime.now(timezone).date()
     # You can change this to Waris's actual birthday date
     # For example, if Waris's birthday is August 10th, change it to: return today.month == 8 and today.day == 10
-    return today.month == 9 and today.day == 20  # Saleha's birthday is December 27th
+    return today.month == 9 and today.day == 20  # Saliha's birthday is December 27th
 
-# Calculate time until Saleha's birthday
+# Calculate time until Saliha's birthday
 def time_until_birthday():
     timezone = pytz.timezone('Asia/Karachi')
     now = datetime.now(timezone)
     current_year = now.year
     
     # Create birthday datetime object for this year (change the date to Waris's actual birthday)
-    birthday = timezone.localize(datetime(current_year, 9, 20, 0, 0, 0))  # Saleha's birthday is December 27th
+    birthday = timezone.localize(datetime(current_year, 9, 20, 0, 0, 0))  # Saliha's birthday is December 27th
     
     # If birthday has already passed this year, look for next year
     if now > birthday:
-        birthday = timezone.localize(datetime(current_year + 1, 9, 20, 0, 0, 0))  # Saleha's birthday is December 27th
+        birthday = timezone.localize(datetime(current_year + 1, 9, 20, 0, 0, 0))  # Saliha's birthday is December 27th
     
     # Calculate time remaining
     delta = birthday - now
@@ -498,7 +498,7 @@ def show_premium_countdown():
         st.markdown("""
         <div class="premium-container reflection">
             <h2 style="text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 30px; color: black;">
-                Saleha's Birthday Celebration
+                Saliha's Birthday Celebration
             </h2>
         """, unsafe_allow_html=True)
         
@@ -619,14 +619,14 @@ def main():
             st.markdown("""
             <div style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
                 <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #666;">
-                    Crafted with ❤️ for Saleha's Special Day | 2025
+                    Crafted with ❤️ for Saliha's Special Day | 2025
                 </p>
             </div>
             """, unsafe_allow_html=True)
             return
     
     # Fixed recipient information
-    recipient_name = "Saleha"
+    recipient_name = "Saliha"
     
     # Full birthday content
     col1, col2, col3 = st.columns([1, 3, 1])
@@ -655,7 +655,7 @@ def main():
     st.markdown(f"""
         <div class="message-card">
             <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 600; margin-bottom: 20px; color: #333;">
-                Dearest Saleha,
+                Dearest Saliha,
             </h2>
             <p style="font-family: 'Playfair Display', serif; font-size: 1.3rem; line-height: 1.8; color: #444; margin-bottom: 20px;">
                 {birthday_message}
@@ -815,7 +815,7 @@ def main():
              style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px;">
         
         <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #98fb98; margin: 20px 0;">
-            Happy Birthday Saleha!
+            Happy Birthday Saliha!
         </h2>
         
         <p style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; color: #666; margin-bottom: 40px;">
@@ -836,7 +836,7 @@ def main():
     st.markdown("""
     <div style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
         <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #666;">
-            Crafted with ❤️ especially for Saleha | 2025
+            Crafted with ❤️ especially for Saliha | 2025
         </p>
     </div>
     """, unsafe_allow_html=True)
