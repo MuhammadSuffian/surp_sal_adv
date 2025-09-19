@@ -11,6 +11,7 @@ from io import BytesIO
 import numpy as np
 import math
 import os
+import hashlib
 
 # Page configuration
 st.set_page_config(
@@ -252,8 +253,9 @@ def local_css():
     }
     
     .photo-placeholder {
-        width: 560px;
-        height: 560px;
+        width: 100%;
+        max-width: 560px;
+        aspect-ratio: 1 / 1;
         background: linear-gradient(145deg, #f0f8f0, #d4e6d4);
         border: 2px solid #98fb98;
         border-radius: 16px;
@@ -344,6 +346,15 @@ def local_css():
     
     </style>
     """, unsafe_allow_html=True)
+
+# Security: password verification
+HASHED_PASSWORD = "53a2113962eb45c7f56822145457f8f12a6336557c62d59368095ec929a68a25"
+
+def verify_password(plain_text: str) -> bool:
+    try:
+        return hashlib.sha256(plain_text.encode("utf-8")).hexdigest() == HASHED_PASSWORD
+    except Exception:
+        return False
 
 # Function to auto-play audio from URL
 def autoplay_audio_url(url):
@@ -454,7 +465,7 @@ def is_birthday():
     today = datetime.now(timezone).date()
     # You can change this to Waris's actual birthday date
     # For example, if Waris's birthday is August 10th, change it to: return today.month == 8 and today.day == 10
-    return today.month == 9 and today.day == 18  # Saleha's birthday is December 27th
+    return today.month == 9 and today.day == 19  # Saleha's birthday is December 27th
 
 # Calculate time until Saleha's birthday
 def time_until_birthday():
@@ -546,6 +557,31 @@ def create_floating_image(image_url, size=200, rotation=5, delay=0):
 
 # Main function
 def main():
+    # Password gate
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+
+    if not st.session_state.authenticated:
+        st.markdown("""
+            <div class="premium-container" style="max-width: 500px; margin: 60px auto; text-align: center;">
+                <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 10px; color: #333;">🔒 Access Required</h2>
+                <p style="font-family: 'Montserrat', sans-serif; color: #666;">Enter the password to continue</p>
+            </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("password_form", clear_on_submit=False):
+            password_input = st.text_input("Password", type="password")
+            submitted = st.form_submit_button("Unlock")
+            if submitted:
+                if verify_password(password_input):
+                    st.session_state.authenticated = True
+                    st.rerun()
+                else:
+                    st.error("Incorrect password")
+
+        if not st.session_state.authenticated:
+            st.stop()
+
     # Add timezone information to the app
     st.sidebar.markdown("### Celebration Details")
     st.sidebar.markdown("**Timezone:** Asia/Karachi (Pakistan Time)")
