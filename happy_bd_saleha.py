@@ -465,7 +465,7 @@ def is_birthday():
     today = datetime.now(timezone).date()
     # You can change this to Waris's actual birthday date
     # For example, if Waris's birthday is August 10th, change it to: return today.month == 8 and today.day == 10
-    return today.month == 12 and today.day == 27
+    return today.month == 11 and today.day == 18
       # Saliha's birthday is December 27th
 
 # Calculate time until Saliha's birthday
