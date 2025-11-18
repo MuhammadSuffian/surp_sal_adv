@@ -475,11 +475,11 @@ def time_until_birthday():
     current_year = now.year
     
     # Create birthday datetime object for this year (change the date to Waris's actual birthday)
-    birthday = timezone.localize(datetime(current_year, 9, 20, 0, 0, 0))  # Saliha's birthday is December 27th
+    birthday = timezone.localize(datetime(current_year, 12, 27, 0, 0, 0))  # Saliha's birthday is December 27th
     
     # If birthday has already passed this year, look for next year
     if now > birthday:
-        birthday = timezone.localize(datetime(current_year + 1, 9, 20, 0, 0, 0))  # Saliha's birthday is December 27th
+        birthday = timezone.localize(datetime(current_year + 1, 12, 27, 0, 0, 0))  # Saliha's birthday is December 27th
     
     # Calculate time remaining
     delta = birthday - now
